@@ -5,7 +5,7 @@ function login() {
     var password = document.getElementById('password').value;
 
     if (loginWorked(username, password)) {
-        window.location.href = "/Chat/Chat";
+        
     } else {
         alert("Username or password is incorrect!");
     }

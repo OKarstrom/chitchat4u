@@ -1,6 +1,6 @@
 ﻿body {
     font-family: Arial, Helvetica, sans-serif;
-    background-image: url("../img/bg2.jpg");
+    background-image: url("../img/bg.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -100,6 +100,7 @@ a.navbar-brand {
     margin-left: 5%;
     width: 20%;
     float: left;
+    overflow-y: scroll;
 }
 
 #messagebox {
@@ -115,6 +116,8 @@ a.navbar-brand {
     background-color: transparent;
     border-radius: 20px;
     float: right;
+    font-size: 25px;
+    color: forestgreen;
 }
 
 #usermsg {
@@ -136,4 +139,33 @@ a.navbar-brand {
     border-radius: 20px;
     float: right;
     font-size: 30px;
+}
+
+.friend-list {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.profile-img {
+    width: 70px;
+    height: 70px;
+    background-size: cover;
+    display: block;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 25px;
+}
+
+.profile-name {
+    margin-left: 100px;
+    padding-top: 25px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: large;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+::-webkit-scrollbar {
+    width: 0px; /* Remove scrollbar space */
+    background: transparent; /* Optional: just make scrollbar invisible */
 }
