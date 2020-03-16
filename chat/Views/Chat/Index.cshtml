@@ -12,7 +12,7 @@
 
             <button class="top-btn">+</button>
 
-            <span style="text-align: center; margin-top: 20px;">
+            <span style="text-align: center; margin-top: 20px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
                 <span style="font-size: large; ">Friends</span>
             </span>
             <ul class="friend-list" id="friendList">
@@ -20,17 +20,29 @@
             </ul>
         </div>
         <div id="chatbox">
-
+            <div class="row">
+                <div class="col-12">
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <ul id="messagesList"></ul>
+                </div>
+            </div>
         </div>
         <div id="messagebox" style="text-align: center;">
-            <form name="message" action="">
-                <input name="usermsg" type="text" id="usermsg" />
-                <input name="submitmsg" type="submit" id="submitmsg" value="Send" />
+            <form name="message" action="" defaultbutton="sendButton">
+                <input style="display:none" type="text" id="userInput" />
+                <input name="usermsg" type="text" id="messageInput" />
+                <input name="submitmsg" type="submit" id="sendButton" value="Send"/>
             </form>
+            
         </div>
     </div>
 </body>
 
 </html>
 
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script type="text/javascript" src="~/js/chat.js"></script>

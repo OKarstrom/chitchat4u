@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Configuration;
 
 namespace chat.Controllers
 {
     public class ChatController : Controller
     {
         // GET: Chat
-        public ActionResult Index(string username, string password)
+        public ActionResult Index()
         {
             return View();
         }
