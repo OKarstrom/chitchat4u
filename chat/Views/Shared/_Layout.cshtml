@@ -19,7 +19,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index" style="width:auto; color: blue;">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="About" asp-action="Index" style="width:auto; color: blue;">About</a>
                         </li>
                         <li class="nav-item">
                             <button class="nav-link text-dark" onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Register</button>
