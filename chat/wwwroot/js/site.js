@@ -10,11 +10,13 @@ function termsPopup() {
 }
 
 function openSignIn() {
+    $(".validation-summary-errors").empty();
     document.getElementById('id02').style.display = 'none';
     document.getElementById('id01').style.display = 'block';
 }
 
 function openRegister() {
+    $(".validation-summary-errors").empty();
     document.getElementById('id01').style.display = 'none';
     document.getElementById('id02').style.display = 'block';
 }

@@ -11,6 +11,7 @@ namespace chat.Controllers
 {
     public class ChatController : Controller
     {
+
         // GET: Chat
         public ActionResult Index()
         {

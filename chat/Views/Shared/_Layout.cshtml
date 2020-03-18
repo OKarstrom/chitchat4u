@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<IdentityUser> SignInManager;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,7 +13,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">CHIT-CHAT 4U</a>
+                <a class="navbar-brand">CHIT-CHAT 4U</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -19,15 +21,27 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-dark" asp-controller="home" asp-action="index">Home</a>
+                        </li>
+
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                        <li class="nav-item">
+                            <form method="post" asp-controller="account" asp-action="logout">
+                                <button type="submit" class="nav-link text-dark"  style="background-color: transparent; border: none; cursor: pointer; width: 100%;">Logout @User.Identity.Name</button>
+                            </form>
+                        </li>
+                        }
+                        else
+                        {
+                        <li class="nav-item">   
+                            <a class="nav-link text-dark" asp-controller="account" asp-action="register">Register</a>
                         </li>
                         <li class="nav-item">
-                            <button class="nav-link text-dark" onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Register</button>
+                            <a class="nav-link text-dark" asp-controller="account" asp-action="login">Login</a>
                         </li>
-                        <li class="nav-item">
-                            <button class="nav-link text-dark" onclick="document.getElementById('id01').style.display='block'" style="width:auto; color: blue;">Login</button>
-                        </li>
-                    </ul>
+                        }
+                       </ul>
                 </div>
             </div>
         </nav>

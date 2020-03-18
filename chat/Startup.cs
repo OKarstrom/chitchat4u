@@ -2,9 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using chat.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,7 +29,30 @@ namespace chat
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(config => {
+                var policy = new AuthorizationPolicyBuilder()
+                                .RequireAuthenticatedUser()
+                                .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
+            //services.AddMvc(config => {
+            //    var policy = new AuthorizationPolicyBuilder()
+            //                    .RequireAuthenticatedUser()
+            //                    .Build();
+            //    config.Filters.Add(new AuthorizeFilter(policy));
+            //});
+
+            services.AddDbContextPool<AppDbContext>(options =>
+                options.UseMySql(
+                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+             { 
+                 options.SignIn.RequireConfirmedAccount = false;
+                 options.Password.RequireNonAlphanumeric = false;
+                 options.Password.RequireDigit = false;
+                 options.Password.RequiredLength = 6;
+             })
+                .AddEntityFrameworkStores<AppDbContext>();
 
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
@@ -49,6 +77,7 @@ namespace chat
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -56,7 +85,7 @@ namespace chat
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapHub<ChatHub>("/chatHub");
+               endpoints.MapHub<ChatHub>("/chatHub");
             });
             
         }
