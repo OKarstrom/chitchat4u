@@ -39,7 +39,7 @@ namespace chat
             services.AddDbContextPool<AppDbContext>(options =>
                 options.UseMySql(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
              { 
                  options.SignIn.RequireConfirmedAccount = false;
                  options.Password.RequireNonAlphanumeric = false;

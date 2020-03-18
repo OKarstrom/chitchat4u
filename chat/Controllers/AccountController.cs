@@ -16,10 +16,10 @@ namespace chat.Controllers
     public class AccountController : Controller
     {
         private readonly ILogger<HomeController> logger;
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
-        public AccountController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             this.logger = logger;
             this.userManager = userManager;
@@ -38,7 +38,7 @@ namespace chat.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = register.Email, Email = register.Email};
+                var user = new ApplicationUser { UserName = register.Email, Email = register.Email};
                 var result = await userManager.CreateAsync(user, register.Password);
 
                 if (result.Succeeded)
