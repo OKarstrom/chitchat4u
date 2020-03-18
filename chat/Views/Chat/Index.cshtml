@@ -16,7 +16,6 @@
                 <span style="font-size: large; ">Friends</span>
             </span>
             <ul class="friend-list" id="friendList">
-                
             </ul>
         </div>
         <div id="chatbox">
@@ -35,29 +34,10 @@
             <form name="message" action="" defaultbutton="sendButton">
                 <input style="display:none" type="text" id="userInput" />
                 <input name="usermsg" type="text" id="messageInput" />
-                <input name="submitmsg" type="submit" id="sendButton" value="Send"/>
+                <input name="submitmsg" type="submit" id="sendButton" value="Send" />
             </form>
-            
+
         </div>
-
-        <div id="id04" class="modal">
-            <div class="modal-content animate">
-                <div class="imgcontainer">
-                    <span onclick="document.getElementById('id04').style.display='none'" class="close" title="Close Modal">&times;</span>
-                </div>
-                <div class="add-friend-header-container">
-                    <label class="add-friend-header">Add friend</label>
-                    </div>
-                <div class="friend-container">
-                    <label for="friend"><b>Add your friends ID here:</b></label> <br />
-                    <input id="friendInput" type="text" value="" placeholder="Enter friend ID" name="friend" required> <br>
-                    <button class="add-friend-button" onclick="addFriend()">Confirm</button>
-
-                </div>
-            </div>
-        </div>
-
-    </div>
 </body>
 
 </html>

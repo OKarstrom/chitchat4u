@@ -35,12 +35,13 @@
                                 <a class="nav-link text-dark" asp-controller="Chat" asp-action="index">Chat</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Chat" asp-action="Settings">Settings</a>
+                            </li>
+                            <li class="nav-item">
                                 <form method="post" asp-controller="account" asp-action="logout">
                                     <button type="submit" class="nav-link text-dark" style="background-color: transparent; border: none; cursor: pointer; width: 100%;">Logout @User.Identity.Name</button>
                                 </form>
                             </li>
-
-
                         }
                         else
                         {
