@@ -1,6 +1,10 @@
 ﻿"use strict";
 
-var user = '12';
+var user = {
+    userID: '12',
+    username: 'Oskar'
+}
+document.getElementById("userInfo").innerHTML = user.username;
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 var nr = 1;
@@ -13,11 +17,11 @@ connection.on("ReceiveMessage", function (user, message) {
 
     var li = document.createElement("li");
     li.textContent = encodedMsg;
-    if (nr == user) {
-        nr = user;
+    if (nr == user.userID) {
+        nr = user.userID;
         li.classList.add("user-class");
     } else {
-        nr = user;
+        nr = user.userID;
         li.classList.add("nonuser-class");
     }
     document.getElementById("messagesList").appendChild(li);
@@ -33,14 +37,27 @@ connection.start().then(function () {
  
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var message = document.getElementById("messageInput").value;
-    console.log(user, message);
-    connection.invoke("SendMessage", user, message).catch(function (err) {
+    console.log(user.userID, message);
+    connection.invoke("SendMessage", user.userID, message).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
 });
 
+function openAddFriend() {
+    document.getElementById('id04').style.display = 'block';
+}
+function addFriend() {
+    var frID = document.getElementById("friendInput").value;
+    console.log(frID);
+}
 
+function userInfo() {
+    var x = document.getElementById("snackbar");
+    x.innerHTML = 'Your ID is: ' + user.userID + '<br> Give this to your friends';
+    x.className = "show";
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 6000);
+}
 
 var friends = [
     { 
@@ -83,14 +100,15 @@ function updateScroll() {
 function newChat(friend) {
     document.getElementById("messagesList").innerHTML = '';
     for (var i = 0; i < chatLog.length; i++) {
-        if (user == chatLog[i].userID && friend == chatLog[i].friendID) {
+        if (user.userID == chatLog[i].userID && friend == chatLog[i].friendID) {
             var conn = chatLog[i].connID;
         }
         }
     if (conn == null) {
         var newConnID = chatLog.length + 1;
+        var ID = user.userID;
         chatLog.push({
-            user, friend, newConnID
+            ID, friend, newConnID
         })
         conn = newConnID;
     }
@@ -107,7 +125,7 @@ function newChat(friend) {
         }
         var li = document.createElement("li");
         li.textContent = encodedMsg;
-        if (user == m.sender) {
+        if (user.userID == m.sender) {
             li.classList.add("user-class");
         } else {
             li.classList.add("nonuser-class");
@@ -186,7 +204,20 @@ var chatMessages = [
         {
             message: 'Nej',
             sender: 12
-        }],
+        },
+        {
+            message: 'Okej',
+            sender: 1234
+        },
+        {
+            message: 'Varför?',
+            sender: 1234
+        },
+        {
+            message: 'Du är inte så fräck som du tror!',
+            sender: 12
+        },
+        ],
     [
         {
             message: 'Katt',
@@ -225,5 +256,14 @@ var chatMessages = [
             message: 'Stick. du har ju inte ens en profilbild. Noob!',
             sender: 12
         }],
-    ]
-    
+]
+
+
+var modal = document.getElementById('id04');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+};
