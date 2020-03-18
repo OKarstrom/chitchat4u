@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/css/login.css" />
 
 </head>
-<div class="text-center">
+<div class="text-center text-white">
     <h1 class="display-4">Welcome</h1>
     <p style="font-size: 20px;">Most awesome chit-chat there is.</p>
     @if (SignInManager.IsSignedIn(User))
@@ -23,8 +23,8 @@
     {
         <p style="font-size: 20px;">
             Create a new account
-            <a class="text-white d-inline-block" asp-controller="account" asp-action="register">here</a> or
-            <a class="text-white d-inline" asp-controller="account" asp-action="register">login</a>
+            <a class="nav-link d-inline-block" asp-controller="account" asp-action="register">here</a><br /> or 
+            <a class="nav-link d-inline" asp-controller="account" asp-action="register">login</a>
         </p>
     }
 
