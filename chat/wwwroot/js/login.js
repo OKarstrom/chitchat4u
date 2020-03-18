@@ -31,4 +31,4 @@ window.onclick = function (event) {
         modal.style.display = "none";
         this.modal2.style.display = "none";
     }
-}
+};

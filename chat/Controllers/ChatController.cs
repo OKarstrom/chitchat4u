@@ -17,6 +17,10 @@ namespace chat.Controllers
         {
             return View();
         }
+        public ActionResult Settings()
+        {
+            return View();
+        }
 
         // GET: Chat/Details/5
         public ActionResult Details(int id)

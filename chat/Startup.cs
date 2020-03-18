@@ -35,12 +35,6 @@ namespace chat
                                 .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
-            //services.AddMvc(config => {
-            //    var policy = new AuthorizationPolicyBuilder()
-            //                    .RequireAuthenticatedUser()
-            //                    .Build();
-            //    config.Filters.Add(new AuthorizeFilter(policy));
-            //});
 
             services.AddDbContextPool<AppDbContext>(options =>
                 options.UseMySql(
@@ -85,7 +79,9 @@ namespace chat
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
                endpoints.MapHub<ChatHub>("/chatHub");
+
             });
             
         }

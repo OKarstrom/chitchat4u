@@ -40,9 +40,9 @@ namespace chat.Controllers
             _logger.LogInformation("chat.Controllers privacy  called");
             return View();
         }
-        public IActionResult Chat()
+        
+        public IActionResult About()
         {
-            _logger.LogInformation("chat.Controllers chat  called");
             return View();
         }
 

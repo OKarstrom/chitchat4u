@@ -10,7 +10,7 @@
     <div id="screen" style="padding:0px">
         <div id="left-div">
 
-            <button class="top-btn">+</button>
+            <button class="top-btn" onclick="openAddFriend()">+</button>
 
             <span style="text-align: center; margin-top: 20px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
                 <span style="font-size: large; ">Friends</span>
@@ -22,7 +22,7 @@
         <div id="chatbox">
             <div class="row">
                 <div class="col-12">
-                    <hr />
+
                 </div>
             </div>
             <div class="row">
@@ -39,10 +39,29 @@
             </form>
             
         </div>
+
+        <div id="id04" class="modal">
+            <div class="modal-content animate">
+                <div class="imgcontainer">
+                    <span onclick="document.getElementById('id04').style.display='none'" class="close" title="Close Modal">&times;</span>
+                </div>
+                <div class="add-friend-header-container">
+                    <label class="add-friend-header">Add friend</label>
+                    </div>
+                <div class="friend-container">
+                    <label for="friend"><b>Add your friends ID here:</b></label> <br />
+                    <input id="friendInput" type="text" value="" placeholder="Enter friend ID" name="friend" required> <br>
+                    <button class="add-friend-button" onclick="addFriend()">Confirm</button>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 </body>
 
 </html>
-
+<script type="text/javascript" src="~/js/settings.js"></script>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script type="text/javascript" src="~/js/chat.js"></script>
+
