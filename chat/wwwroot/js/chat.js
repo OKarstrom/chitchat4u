@@ -4,7 +4,6 @@ var user = {
     userID: '12',
     username: 'Oskar'
 }
-document.getElementById("userInfo").innerHTML = user.username;
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 var nr = 1;
@@ -44,53 +43,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     event.preventDefault();
 });
 
-function openAddFriend() {
-    document.getElementById('id04').style.display = 'block';
-}
-function addFriend() {
-    var frID = document.getElementById("friendInput").value;
-    console.log(frID);
-}
 
-function userInfo() {
-    var x = document.getElementById("snackbar");
-    x.innerHTML = 'Your ID is: ' + user.userID + '<br> Give this to your friends';
-    x.className = "show";
-    setTimeout(function () { x.className = x.className.replace("show", ""); }, 6000);
-}
-
-var friends = [
-    { 
-        name: 'Oskar',
-        age: 28,
-        userID: 123,
-        src: '../img/oskar.jpg'
-    },
-    {
-        name: 'Filip',
-        age: 28,
-        userID: 1234,
-        src: '../img/fille.jpg'
-    },
-    {
-        name: 'Christian',
-        age: 30,
-        userID: 12345,
-        src: '../img/christian.jpg'
-    },
-    {
-        name: 'Ulf',
-        age: 30,
-        userID: 123456,
-        src: '../img/nopic.png'
-    }
-]
-
-
-for (var friend in friends) {
-    document.getElementById('friendList').innerHTML += '<li class="profile-img"; style="background-image: url(' + friends[friend].src + ');"><button class="profile-name" onclick="newChat(' + friends[friend].userID + ')";>' + friends[friend].name + '</button></li>';
-
-}
 
 function updateScroll() {
     var element = document.getElementById("chatbox");
@@ -113,7 +66,6 @@ function newChat(friend) {
         conn = newConnID;
     }
 
-    console.log(conn);
     chatMessages[conn].forEach(m => {
         console.log(m.message + " från: " + m.sender);
         var msg = m.message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -135,135 +87,3 @@ function newChat(friend) {
         updateScroll();
     })
 }
-
-var chatLog = [
-    {
-        userID: 12,
-        friendID: 123,
-        connID: 0,
-    },
-    {
-        userID: 12,
-        friendID: 1234,
-        connID: 1,    
-    },
-    {
-        userID: 12,
-        friendID: 12345,
-        connID: 2
-    },
-    {
-        userID: 12,
-        friendID: 123456,
-        connID: 3
-    }]
-
-var chatMessages = [
-    [
-    {
-        message: 'Hejsan',
-        sender: 12
-    },
-    {
-        message: 'Tjabba',
-        sender: 123
-    },
-    {
-        message: 'Läget?',
-        sender: 12
-    },
-    {
-        message: 'Jo det är bra!',
-        sender: 123
-    },
-    {
-        message: 'Själv då?',
-        sender: 123
-        }],
-    [
-        {
-            message: 'Jag heter Staffansson i efternamn',
-            sender: 12
-        },
-        {
-            message: 'Jaså, Jag heter Bullared.',
-            sender: 1234
-        },
-        {
-            message: 'Fan va coolt, är du född där??',
-            sender: 12
-        },
-        {
-            message: 'Var?',
-            sender: 1234
-        },
-        {
-            message: 'Ullared?',
-            sender: 1234
-        },
-        {
-            message: 'Nej',
-            sender: 12
-        },
-        {
-            message: 'Okej',
-            sender: 1234
-        },
-        {
-            message: 'Varför?',
-            sender: 1234
-        },
-        {
-            message: 'Du är inte så fräck som du tror!',
-            sender: 12
-        },
-        ],
-    [
-        {
-            message: 'Katt',
-            sender: 12
-        },
-        {
-            message: 'Kattmat.',
-            sender: 12345
-        },
-        {
-            message: 'rar',
-            sender: 12
-        },
-        {
-            message: 'Mögelost',
-            sender: 12345
-        },
-        {
-            message: 'fy fan va snuskigt',
-            sender: 12345
-        },
-        {
-            message: 'Nej',
-            sender: 12
-        }],
-    [
-        {
-            message: 'Vem du?',
-            sender: 12
-        },
-        {
-            message: 'Ulf heter jag.',
-            sender: 123456
-        },
-        {
-            message: 'Stick. du har ju inte ens en profilbild. Noob!',
-            sender: 12
-        }],
-]
-
-
-var modal = document.getElementById('id04');
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-};
