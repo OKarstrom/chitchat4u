@@ -74,7 +74,7 @@ namespace chat.Controllers
             {
                 var result = await signInManager.PasswordSignInAsync(login.Email, login.Password, false, false);
                 if (result.Succeeded)
-                    return RedirectToAction("index", "chat");
+                    return RedirectToAction("index", "home");
                 ModelState.AddModelError("", "Login failed");
             }
             return View();
