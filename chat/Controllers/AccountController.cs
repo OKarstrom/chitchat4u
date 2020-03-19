@@ -58,6 +58,40 @@ namespace chat.Controllers
         }
 
         [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            logger.LogInformation("AccountController Changepassword called (Get)");
+
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePassword changepassword)
+        {
+            logger.LogInformation("AccountController ChangePassword called (Post)");
+
+            if(ModelState.IsValid)
+            {
+                var user = await userManager.GetUserAsync(this.User);
+                var result = await userManager.ChangePasswordAsync(user, changepassword.OldPassword, changepassword.NewPassword);
+
+                if (result.Succeeded)
+                {
+                    Console.WriteLine("Success");
+                    return RedirectToAction("index", "chat");
+                    
+                }
+                foreach (var error in result.Errors)
+                {
+                    //Show in register view
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            return View(changepassword);
+        }
+
+        [HttpGet]
         public IActionResult Login()
         {
             logger.LogInformation("AccountController Login called (Get)");
