@@ -121,5 +121,42 @@ namespace chat.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("index", "home");
         }
+
+        [HttpGet]
+        public IActionResult DeleteAccount()
+        {
+            logger.LogInformation("AccountController DeleteAccount called (Get)");
+
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteAccount(DeleteAccount delete)
+        {
+            logger.LogInformation("AccountController DeleteAccount called (Post)");
+
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.GetUserAsync(this.User);
+                var result = await signInManager.PasswordSignInAsync(user.Email, delete.Password, false, false);
+                if (result.Succeeded)
+                {
+                    var result2 = await userManager.DeleteAsync(user);
+                    if (result2.Succeeded)
+                    {
+                        await Logout();
+                        return RedirectToAction("index", "home");
+                    }
+                    else
+                    {
+                        foreach (var error in result2.Errors)
+                        {
+                            //Show in register view
+                            ModelState.AddModelError("", error.Description);
+                        }
+                    }                
+                }                             
+            }
+            return View(delete);
+        }
     }
 }
