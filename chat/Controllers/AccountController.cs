@@ -41,6 +41,8 @@ namespace chat.Controllers
                 var user = new ApplicationUser {UserName = register.Email, Email = register.Email};
                 var result = await userManager.CreateAsync(user, register.Password);
 
+                
+
                 if (result.Succeeded)
                 {
                     //Goto chat
@@ -103,7 +105,7 @@ namespace chat.Controllers
             if (ModelState.IsValid)
             {
                 var user = await userManager.GetUserAsync(this.User);
-                var result = userManager.NormalizeName(changeUsername.Username);
+                var result = userManager.
                 
 
                 if (result.Succeeded)
