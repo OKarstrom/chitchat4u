@@ -12,6 +12,8 @@ namespace chat.Models
         {
             this.Connections = new List<ApplicationUserConnection>();
         }
+        public virtual List<ApplicationUserConnection> Connections { get; set; }
+        [PersonalData]
         public string DisplayName { get; set; }
         
     }

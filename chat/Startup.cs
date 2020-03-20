@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using chat.Identity;
 using chat.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -49,7 +50,7 @@ namespace chat
                 
              })
                 .AddEntityFrameworkStores<AppDbContext>();
-
+            //services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, AppClaimsPrincipalFactory>();
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
             services.AddSignalR();
