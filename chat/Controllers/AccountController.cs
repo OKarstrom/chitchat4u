@@ -18,16 +18,23 @@ namespace chat.Controllers
         private readonly ILogger<HomeController> logger;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly IDataBaseRepository dataBaseRepository;
 
-        public AccountController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(
+            ILogger<HomeController> logger, 
+            UserManager<ApplicationUser> userManager, 
+            SignInManager<ApplicationUser> signInManager, 
+            IDataBaseRepository dataBaseRepository)
         {
             this.logger = logger;
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.dataBaseRepository = dataBaseRepository;
         }
 
         public IActionResult Register()
         {
+            List<ApplicationUser> u = dataBaseRepository.GetAllUsers();
             return View();
         }
 

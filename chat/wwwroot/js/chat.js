@@ -4,7 +4,7 @@ var user = {
     userID: '12',
     username: 'Oskar'
 }
-document.getElementById("userInfo").innerHTML = user.username;
+//document.getElementById("userInfo").innerHTML = user.username;
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 var nr = 1;
@@ -14,7 +14,6 @@ document.getElementById("sendButton").disabled = true;
 connection.on("ReceiveMessage", function (user, message) {
     var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     var encodedMsg = msg;
-
     var li = document.createElement("li");
     li.textContent = encodedMsg;
     if (nr == user.userID) {

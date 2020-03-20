@@ -36,21 +36,26 @@ namespace chat
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
 
-            services.AddDbContextPool<AppDbContext>(options =>
+            services.AddDbContext<AppDbContext>(options =>
                 options.UseMySql(
                     Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
              { 
                  options.SignIn.RequireConfirmedAccount = false;
                  options.Password.RequireNonAlphanumeric = false;
                  options.Password.RequireDigit = false;
                  options.Password.RequiredLength = 6;
+                
              })
                 .AddEntityFrameworkStores<AppDbContext>();
 
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
             services.AddSignalR();
+            //services.AddTransient<IDataBaseRepository, DataBaseRepository>();
+            services.AddScoped<IDataBaseRepository, DataBaseRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,7 +78,7 @@ namespace chat
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -82,7 +87,10 @@ namespace chat
 
                endpoints.MapHub<ChatHub>("/chatHub");
 
+                endpoints.MapControllers();
             });
+
+            
             
         }
     }

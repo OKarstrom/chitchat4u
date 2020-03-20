@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace chat.Models
 {
-    public class ApplicationUser:IdentityUser
+    public class ApplicationUser : IdentityUser
     {
         public ApplicationUser()
         {
-            this.Connections = new HashSet<ApplicationUserConnection>();
+            this.Connections = new List<ApplicationUserConnection>();
         }
-        public virtual ICollection<ApplicationUserConnection> Connections { get; set; }
+        public string DisplayName { get; set; }
+        public List<ApplicationUserConnection> Connections { get; set; }
+        
     }
 }

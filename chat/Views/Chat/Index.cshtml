@@ -5,6 +5,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="~/css/chat.css" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
 </head>
 <body>
     <div id="screen">
@@ -36,11 +37,45 @@
                 <input name="usermsg" type="text" id="messageInput" />
                 <input name="submitmsg" type="submit" id="sendButton" value="Send" />
             </form>
-
+            <button id="testa">knapp</button>
         </div>
+
+        <div id="id04" class="modal">
+            <div class="modal-content animate">
+                <div class="imgcontainer">
+                    <span onclick="document.getElementById('id04').style.display='none'" class="close" title="Close Modal">&times;</span>
+                </div>
+                <div class="add-friend-header-container">
+                    <label class="add-friend-header">Add friend</label>
+                </div>
+                <div class="friend-container">
+                    <label for="friend"><b>Add your friends ID here:</b></label> <br />
+                    <input id="friendInput" type="text" value="" placeholder="Enter friend ID" name="friend" required> <br>
+                    <button class="add-friend-button" onclick="addFriend()">Confirm</button>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+     $(document).ready(function () {
+    $("#testa").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/api/accounts/transferconnection',
+            data: { ["f70578a3-d6da-4628-8d2c-47dbc615b16a", "9662d07a-9e6e-45ee-91a6-20e9f5855818"]},
+            success: function (result) {
+                alert(result);
+            }
+        });
+    });
+})
+    </script>
 </body>
 
 </html>
+<script type="text/javascript" src="~/js/fetch-shool.js"></script>
 <script type="text/javascript" src="~/js/settings.js"></script>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script type="text/javascript" src="~/js/chat.js"></script>

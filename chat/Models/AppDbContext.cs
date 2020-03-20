@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace chat.Models
 {
-    public class AppDbContext:IdentityDbContext<ApplicationUser>
+    public class AppDbContext : IdentityDbContext<ApplicationUser>, IDisposable
     {
         public AppDbContext(DbContextOptions<AppDbContext> options):base(options)
         {
@@ -16,12 +16,16 @@ namespace chat.Models
 
         public DbSet<Message> Message { get; set; }
         public DbSet<Connection> Connection { get; set; }
+        public DbSet<ApplicationUserConnection> UserConnections { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ApplicationUserConnection>()
                .HasKey(a => new { a.ConnectionID, a.ApplicationUserID });
+            
             base.OnModelCreating(modelBuilder);
         }
+
+
     }
 }
