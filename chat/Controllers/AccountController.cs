@@ -38,7 +38,7 @@ namespace chat.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = register.Email, Email = register.Email};
+                var user = new ApplicationUser {UserName = register.Email, Email = register.Email};
                 var result = await userManager.CreateAsync(user, register.Password);
 
                 if (result.Succeeded)
@@ -61,8 +61,12 @@ namespace chat.Controllers
         public IActionResult ChangePassword()
         {
             logger.LogInformation("AccountController Changepassword called (Get)");
+            return View();
+        }
 
-
+        public IActionResult ChangeUsername()
+        {
+            logger.LogInformation("AccountController Changeusername called (Get)");
             return View();
         }
 
@@ -91,6 +95,32 @@ namespace chat.Controllers
             return View(changepassword);
         }
 
+/*        [HttpPost]
+        public async Task<IActionResult> ChangeUsername(ChangeUsername changeUsername)
+        {
+            logger.LogInformation("AccountController ChangePassword called (Post)");
+
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.GetUserAsync(this.User);
+                var result = userManager.NormalizeName(changeUsername.Username);
+                
+
+                if (result.Succeeded)
+                {
+                    Console.WriteLine("Success");
+                    return RedirectToAction("index", "chat");
+
+                }
+                foreach (var error in result.Errors)
+                {
+                    //Show in register view
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            return View(changeUsername);
+        }*/
+
         [HttpGet]
         public IActionResult Login()
         {
@@ -106,6 +136,7 @@ namespace chat.Controllers
             logger.LogInformation("AccountController Login called (Post)");
             if (ModelState.IsValid)
             {
+                var user = await userManager.GetUserAsync(this.User);
                 var result = await signInManager.PasswordSignInAsync(login.Email, login.Password, false, false);
                 if (result.Succeeded)
                     return RedirectToAction("index", "home");
