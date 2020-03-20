@@ -6,25 +6,20 @@ using System.Threading.Tasks;
 
 namespace chat.Models
 {
-    public class RegisterVM
+    public class ChangePassword
     {
-
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        [DataType(DataType.Password)]
 
-        [Required]
-        [DataType(DataType.Text)]
-        public string Username { get; set; }
+        public string OldPassword { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password")]//Otherwise it is the tag name
-        [Compare("Password", ErrorMessage = "Password and confirmation password does not match")]
+        [Compare("NewPassword", ErrorMessage = "Password and confirmation password does not match")]
         public string ConfirmPassword { get; set; }
-
     }
 }

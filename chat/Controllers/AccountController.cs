@@ -45,8 +45,10 @@ namespace chat.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = register.Email, Email = register.Email};
+                var user = new ApplicationUser {UserName = register.Email, Email = register.Email};
                 var result = await userManager.CreateAsync(user, register.Password);
+
+                
 
                 if (result.Succeeded)
                 {
@@ -65,6 +67,70 @@ namespace chat.Controllers
         }
 
         [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            logger.LogInformation("AccountController Changepassword called (Get)");
+            return View();
+        }
+
+        public IActionResult ChangeUsername()
+        {
+            logger.LogInformation("AccountController Changeusername called (Get)");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePassword changepassword)
+        {
+            logger.LogInformation("AccountController ChangePassword called (Post)");
+
+            if(ModelState.IsValid)
+            {
+                var user = await userManager.GetUserAsync(this.User);
+                var result = await userManager.ChangePasswordAsync(user, changepassword.OldPassword, changepassword.NewPassword);
+
+                if (result.Succeeded)
+                {
+                    Console.WriteLine("Success");
+                    return RedirectToAction("index", "chat");
+                    
+                }
+                foreach (var error in result.Errors)
+                {
+                    //Show in register view
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            return View(changepassword);
+        }
+
+/*        [HttpPost]
+        public async Task<IActionResult> ChangeUsername(ChangeUsername changeUsername)
+        {
+            logger.LogInformation("AccountController ChangePassword called (Post)");
+
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.GetUserAsync(this.User);
+                var result = userManager.
+                
+
+                if (result.Succeeded)
+                {
+                    Console.WriteLine("Success");
+                    return RedirectToAction("index", "chat");
+
+                }
+                foreach (var error in result.Errors)
+                {
+                    //Show in register view
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            return View(changeUsername);
+        }*/
+
+        [HttpGet]
         public IActionResult Login()
         {
             logger.LogInformation("AccountController Login called (Get)");
@@ -79,9 +145,10 @@ namespace chat.Controllers
             logger.LogInformation("AccountController Login called (Post)");
             if (ModelState.IsValid)
             {
+                var user = await userManager.GetUserAsync(this.User);
                 var result = await signInManager.PasswordSignInAsync(login.Email, login.Password, false, false);
                 if (result.Succeeded)
-                    return RedirectToAction("index", "chat");
+                    return RedirectToAction("index", "home");
                 ModelState.AddModelError("", "Login failed");
             }
             return View();
@@ -93,6 +160,43 @@ namespace chat.Controllers
             logger.LogInformation("AccountController Logout called (Post)");
             await signInManager.SignOutAsync();
             return RedirectToAction("index", "home");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteAccount()
+        {
+            logger.LogInformation("AccountController DeleteAccount called (Get)");
+
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteAccount(DeleteAccount delete)
+        {
+            logger.LogInformation("AccountController DeleteAccount called (Post)");
+
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.GetUserAsync(this.User);
+                var result = await signInManager.PasswordSignInAsync(user.Email, delete.Password, false, false);
+                if (result.Succeeded)
+                {
+                    var result2 = await userManager.DeleteAsync(user);
+                    if (result2.Succeeded)
+                    {
+                        await Logout();
+                        return RedirectToAction("index", "home");
+                    }
+                    else
+                    {
+                        foreach (var error in result2.Errors)
+                        {
+                            //Show in register view
+                            ModelState.AddModelError("", error.Description);
+                        }
+                    }                
+                }                             
+            }
+            return View(delete);
         }
     }
 }

@@ -13,7 +13,6 @@ namespace chat.Models
             this.Connections = new List<ApplicationUserConnection>();
         }
         public string DisplayName { get; set; }
-        public List<ApplicationUserConnection> Connections { get; set; }
         
     }
 }

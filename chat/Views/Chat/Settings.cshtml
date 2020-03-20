@@ -10,35 +10,16 @@
 
 <html>
 <body>
-    <div style="text-align:center; margin-top: 200px;">
-        <button class="settings-btn" onclick="document.getElementById('id03').style.display='block'">Change password</button>
+    <div style="margin-top: 200px; text-align:center;">
+        <a class="text-white" style="border:3px solid gray; border-radius: 20px; width:200px; padding: 15px; font-size:large" asp-controller="Account" asp-action="ChangePassword">Change password</a>
     </div>
-    <!--    <div style="text-align:center">
-            <button class="settings-btn">Something else</button>
-        </div>
-    -->
-
-    <div id="id03" class="modal">
-
-        <div class="modal-content animate">
-            <div class="imgcontainer">
-                <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal">&times;</span>
-            </div>
-
-            <div class="container">
-                <label for="oldPW" style="margin-top: 100px; color: white;"><b>Old Password</b></label>
-                <input id="oldPW" type="password" value="" placeholder="Enter old password" name="oldPW" required>
-
-
-                <label for="newPW" style="color: white;"><b>New Password</b></label>
-                <input id="newPW2" type="password" value="" placeholder="Enter new password" name="newPW2" required>
-                <input id="newPW2" style="margin-bottom: 40px" type="password" value="" placeholder="Enter new password again" name="newPW2" required>
-
-                <input type="submit" class="submit-btn" value="Change password">
-                <br>
-            </div>
-        </div>
+    <div style="margin-top: 40px; text-align:center;">
+        <a class="text-white" style="border:3px solid gray; border-radius: 20px; width:200px; padding: 15px; font-size:large" asp-controller="Account" asp-action="ChangeUsername">Change username</a>
     </div>
+    <div style="margin-top: 40px; text-align:center;">
+        <a class="text-white" style="border:3px solid red; border-radius: 20px; width:200px; padding: 15px; font-size:large" asp-controller="Account" asp-action="DeleteAccount">Delete your account</a>
+    </div>
+
 </body>
 </html>
 
