@@ -30,11 +30,14 @@ connection.on("ReceiveMessage", function (user, message) {
 });
 
 connection.start().then(function () {
+    
     document.getElementById("sendButton").disabled = false;
 }).catch(function (err) {
     return console.error(err.toString());
 });
- 
+conn_arr = conn_arr;
+
+ppp = ppp;
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var message = document.getElementById("messageInput").value;
     console.log(user.userID, message);

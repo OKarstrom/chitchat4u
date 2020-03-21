@@ -1,4 +1,4 @@
-﻿@model ConnectionVM;
+﻿@model ChatVM;
 @{
     ViewData["Title"] = "Chat";
     Layout = "_Layout";
@@ -38,7 +38,7 @@
                 <input name="usermsg" type="text" id="messageInput" />
                 <input name="submitmsg" type="submit" id="sendButton" value="Send" />
             </form>
-            <button id="testa">knapp</button>
+
         </div>
 
         <div id="id04" class="modal">
@@ -57,26 +57,35 @@
                 </div>
             </div>
         </div>
-
     </div>
-    <script>
-     $(document).ready(function () {
-    $("#testa").click(function () {
-        $.ajax({
-            type: 'POST',
-            url: '/api/accounts/transferconnection',
-            data: { ["f70578a3-d6da-4628-8d2c-47dbc615b16a", "9662d07a-9e6e-45ee-91a6-20e9f5855818"]},
-            success: function (result) {
-                alert(result);
-            }
-        });
-    });
-})
-    </script>
 </body>
 
 </html>
-<script type="text/javascript" src="~/js/fetch-shool.js"></script>
+<script>
+    //Global connection object
+    var conn_arr= [];
+    @foreach (ConnectionVM cvm in Model.Connections)
+    {
+        <text>
+        var conn = new Object();
+        conn.coonectionId = "@cvm.Id";
+        var users = []
+            @foreach (UserDetails ud in cvm.UserList)
+            {
+                <text>
+                var user = new Object();
+                user.id = "@ud.Id";
+                user.email = "@ud.Email";
+                user.displayname = "@ud.DisplayName";
+                users.push(user);
+                </text>
+            }
+        conn.users = users;
+        conn_arr.push(conn);
+        </text>
+    }
+    var ppp = 3;
+</script>
 <script type="text/javascript" src="~/js/settings.js"></script>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script type="text/javascript" src="~/js/chat.js"></script>

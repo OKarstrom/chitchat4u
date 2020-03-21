@@ -22,13 +22,13 @@ namespace chat.Controllers
             this.dataBaseRepository = dataBaseRepository;
         }
     // GET: Chat
-    public ActionResult Index()
+    public ActionResult Index(ChatVM chatVM)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//Get ID
-            List<ConnectionVM> connectionList = dataBaseRepository.GetAllConnections(userId);
-            ChatVM cVM = new ChatVM();
+            chatVM.Connections = dataBaseRepository.GetAllConnections(userId);
+            
 
-            return View();
+            return View(chatVM);
         }
         public ActionResult Settings()
         {
