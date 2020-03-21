@@ -45,10 +45,8 @@ namespace chat.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser {UserName = register.Email, Email = register.Email};
+                var user = new ApplicationUser {UserName = register.Username, Email = register.Email};
                 var result = await userManager.CreateAsync(user, register.Password);
-
-                
 
                 if (result.Succeeded)
                 {

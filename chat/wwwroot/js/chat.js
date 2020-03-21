@@ -38,7 +38,8 @@ connection.start().then(function () {
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var message = document.getElementById("messageInput").value;
     console.log(user.userID, message);
-    connection.invoke("SendMessage", user.userID, message).catch(function (err) {
+    var test = [user.userID];
+    connection.invoke("SendMessage", test, message).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();

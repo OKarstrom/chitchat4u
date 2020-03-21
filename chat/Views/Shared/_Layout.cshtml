@@ -1,4 +1,5 @@
 ﻿@inject SignInManager<ApplicationUser> SignInManager;
+@inject UserManager<ApplicationUser> Usermanager;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +34,11 @@
                             </li>
                             <li class="nav-item">
                                 <form method="post" asp-controller="account" asp-action="logout">
-                                    <button type="submit" class="nav-link text-dark" style="background-color: transparent; border: none; cursor: pointer; width: 100%;">Logout @User.Identity.Name</button>
+                                    @{
+                                        var user = await Usermanager.FindByNameAsync(User.Identity.Name);
+                                        <button type="submit" class="nav-link text-dark" style="background-color: transparent; border: none; cursor: pointer; width: 100%;">Logout @(user.DisplayName) </button>
+                                    }
+
                                 </form>
                             </li>
                           

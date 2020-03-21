@@ -1,4 +1,5 @@
 ﻿@inject SignInManager<ApplicationUser> SignInManager;
+@inject UserManager<ApplicationUser> Usermanager;
 @{
     ViewData["Title"] = "Home Page";
     Layout = "_Layout";
@@ -14,16 +15,17 @@
     <p style="font-size: 20px;">Most awesome chit-chat there is.</p>
     @if (SignInManager.IsSignedIn(User))
     {
+        var user = await Usermanager.FindByNameAsync(User.Identity.Name);
         <p style="font-size: 20px;">
-            Welcome @User.Identity.Name
+            Welcome @user.DisplayName
         </p>
-
-    }
-    else
+        
+     }
+else
     {
         <p style="font-size: 20px;">
             Create a new account
-            <a class="nav-link d-inline-block" asp-controller="account" asp-action="register">here</a><br /> or 
+            <a class="nav-link d-inline-block" asp-controller="account" asp-action="register">here</a><br /> or
             <a class="nav-link d-inline" asp-controller="account" asp-action="register">login</a>
         </p>
     }

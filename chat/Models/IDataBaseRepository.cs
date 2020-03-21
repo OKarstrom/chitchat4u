@@ -7,9 +7,11 @@ namespace chat.Models
 {
     public interface IDataBaseRepository
     {
-        List<Connection> GetAllConnections(string id);
+        List<ConnectionVM> GetAllConnections(string id);
 
         List<ApplicationUser> GetAllUsers();
+
+        //List<string> GetConnectionDisplaynames
 
         Connection AddConnection(List<string> id);
         

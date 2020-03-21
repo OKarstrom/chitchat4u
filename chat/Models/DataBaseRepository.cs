@@ -40,13 +40,63 @@ namespace chat.Models
             return appDbContext.Connection.AsEnumerable<Connection>().ToList();
         }
 
-        public List<Connection> GetAllConnections(string id)
+        /// <summary>
+        /// Get connections for a userId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<ConnectionVM> GetAllConnections(string id)
         {
-            var u = appDbContext.UserConnections.Where(c => c.ApplicationUserID == id).Select(s => s.Connection).Select(s => s.Users.Where(s=>s.ApplicationUserID != id)); 
-            var au = appDbContext.Users
-                .First<ApplicationUser>(a => a.Id.Equals(id))
-                .Connections.Select<ApplicationUserConnection, Connection>(auc => auc.Connection);
-            return au.ToList();
+
+            var connectionsRequired = (from con in appDbContext.UserConnections
+                                       join user in appDbContext.Users
+                                       on con.ApplicationUserID equals user.Id
+                                       where user.Id.Equals(id)
+                                       select new
+                                       {
+                                           Connection = con.Connection.Id,
+                                       }).ToList();
+
+            var Connections = (from con in connectionsRequired
+                              join ucon in appDbContext.UserConnections
+                              on con.Connection equals ucon.ConnectionID
+                              join user in appDbContext.Users
+                              on ucon.ApplicationUserID equals user.Id
+                              where user.Id != id
+                              select new
+                              {
+                                  ConnectionId = con.Connection,
+                                  UserId = user.Id,
+                                  UserEmail = user.Email,
+                                  UserDisplayName = user.DisplayName
+                              }).ToList();
+
+            //Sorting dictionary if we have multiple users in one connection
+            Dictionary<int, ConnectionVM> conDict = new Dictionary<int, ConnectionVM>();
+
+            foreach (var con in Connections)
+            {
+                if (!conDict.ContainsKey(con.ConnectionId))//For handling multiple users in one connection
+                {
+                    conDict.Add(
+                        con.ConnectionId,
+                        new ConnectionVM
+                        {
+                            Id = con.ConnectionId,
+                            UserList = new List<UserDetails>()
+                        });
+                }
+
+                conDict[con.ConnectionId].UserList.Add(
+                    new UserDetails
+                    {
+                        Id = con.UserId,
+                        DisplayName = con.UserDisplayName,
+                        Email = con.UserEmail
+                    });
+            }
+
+            return conDict.Values.ToList();
         }
 
         public List<ApplicationUser> GetAllUsers()
