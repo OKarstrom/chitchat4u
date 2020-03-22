@@ -1,0 +1,27 @@
+﻿@model ApplicationUser
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-white" style="margin-bottom:15px;">Update User</h1>
+<a asp-action="Index" class="text-white" style="border:3px solid gray; border-radius: 20px; width:200px; padding: 10px; font-size:large">Back</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Update" method="post" class="text-white">
+    <div class="form-group">
+        <label asp-for="Id"></label>
+        <input asp-for="Id" class="form-control" disabled />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="UserName">Email</label>
+        <input asp-for="UserName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input name="password" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary" style="width: 100%;">Save</button>
+</form>
+

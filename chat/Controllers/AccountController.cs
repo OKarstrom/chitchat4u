@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using chat.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -97,38 +96,11 @@ namespace chat.Controllers
             return View(changepassword);
         }
 
-/*        [HttpPost]
-        public async Task<IActionResult> ChangeUsername(ChangeUsername changeUsername)
-        {
-            logger.LogInformation("AccountController ChangePassword called (Post)");
-
-            if (ModelState.IsValid)
-            {
-                var user = await userManager.GetUserAsync(this.User);
-                var result = userManager.
-                
-
-                if (result.Succeeded)
-                {
-                    Console.WriteLine("Success");
-                    return RedirectToAction("index", "chat");
-
-                }
-                foreach (var error in result.Errors)
-                {
-                    //Show in register view
-                    ModelState.AddModelError("", error.Description);
-                }
-            }
-            return View(changeUsername);
-        }*/
 
         [HttpGet]
         public IActionResult Login()
         {
             logger.LogInformation("AccountController Login called (Get)");
-        
-
                 return View();
         }
 

@@ -1,0 +1,25 @@
+﻿@model User
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-white">Create User</h1>
+<a class="text-white" asp-action="Index" style="border:3px solid gray; border-radius: 20px; width:200px; padding: 10px; margin-top: 10px; font-size:large">Back</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form method="post" class="text-white">
+    <div class="form-group">
+        <label asp-for="Username"></label>
+        <input asp-for="Username" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary" style="width: 100%;">Create</button>
+</form>

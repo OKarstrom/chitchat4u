@@ -1,0 +1,32 @@
+﻿@model Admin
+@{
+    ViewData["Title"] = "Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/chat.css" />
+    <link rel="stylesheet" href="~/css/settings.css" />
+</head>
+
+<html>
+<body>
+
+    <div class="align-middle; text-white">
+        <div class="col-md-8">
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="userEmail">Enter users email to remove account</label>
+                    <input asp-for="userEmail" class="form-control" />
+                    <span asp-validation-for="userEmail" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; border:3px solid red;">Remove user</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
+
