@@ -9,8 +9,8 @@ using chat.Models;
 namespace chat.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200319105558_New Many to many")]
-    partial class NewManytomany
+    [Migration("20200323020421_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -159,6 +159,9 @@ namespace chat.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("Email")
                         .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
                         .HasMaxLength(256);
@@ -223,7 +226,7 @@ namespace chat.Migrations
 
                     b.HasIndex("ApplicationUserID");
 
-                    b.ToTable("ApplicationUserConnection");
+                    b.ToTable("UserConnections");
                 });
 
             modelBuilder.Entity("chat.Models.Connection", b =>
@@ -246,20 +249,20 @@ namespace chat.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("ConnectionId")
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<int>("ConnectionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ConnectionId");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ConnectionId");
 
                     b.ToTable("Message");
                 });
@@ -332,13 +335,15 @@ namespace chat.Migrations
 
             modelBuilder.Entity("chat.Models.Message", b =>
                 {
+                    b.HasOne("chat.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("chat.Models.Connection", "Connection")
                         .WithMany()
-                        .HasForeignKey("ConnectionId");
-
-                    b.HasOne("chat.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("ConnectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

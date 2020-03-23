@@ -13,7 +13,11 @@ namespace chat.Models
         [Key]
         public int Id { get; set; }
         public string Content { get; set; }
+
+        [ForeignKey("ConnectionId")]
         public virtual Connection Connection { get; set; }
-        public virtual ApplicationUser User { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

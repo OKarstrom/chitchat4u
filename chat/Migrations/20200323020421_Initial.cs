@@ -40,11 +40,25 @@ namespace chat.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    DisplayName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Connection",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Address = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Connection", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,6 +167,57 @@ namespace chat.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Message",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Content = table.Column<string>(nullable: true),
+                    ConnectionId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Message", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Message_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Message_Connection_ConnectionId",
+                        column: x => x.ConnectionId,
+                        principalTable: "Connection",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserConnections",
+                columns: table => new
+                {
+                    ApplicationUserID = table.Column<string>(nullable: false),
+                    ConnectionID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserConnections", x => new { x.ConnectionID, x.ApplicationUserID });
+                    table.ForeignKey(
+                        name: "FK_UserConnections_AspNetUsers_ApplicationUserID",
+                        column: x => x.ApplicationUserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserConnections_Connection_ConnectionID",
+                        column: x => x.ConnectionID,
+                        principalTable: "Connection",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -189,6 +254,21 @@ namespace chat.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Message_ApplicationUserId",
+                table: "Message",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Message_ConnectionId",
+                table: "Message",
+                column: "ConnectionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserConnections_ApplicationUserID",
+                table: "UserConnections",
+                column: "ApplicationUserID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -209,10 +289,19 @@ namespace chat.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Message");
+
+            migrationBuilder.DropTable(
+                name: "UserConnections");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Connection");
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace chat.Migrations
 {
-    public partial class Testaa : Migration
+    public partial class MessageV5 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

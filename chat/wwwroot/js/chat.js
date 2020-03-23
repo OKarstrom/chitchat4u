@@ -1,28 +1,24 @@
 ﻿"use strict";
 
-var user = {
-    userID: '12',
-    username: 'Oskar'
-}
-
 //document.getElementById("userInfo").innerHTML = user.username;
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-var nr = 1;
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
 
 connection.on("ReceiveMessage", function (user, message) {
-    var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    var encodedMsg = msg;
-    var li = document.createElement("li");
+    let msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    let encodedMsg = msg;
+    
+    let li = document.createElement("li");
     li.textContent = encodedMsg;
-    if (nr == user.userID) {
-        nr = user.userID;
+    if (session.currenuserid === user) {
         li.classList.add("user-class");
-    } else {
-        nr = user.userID;
+    } else if (session.friendsid === user) {
         li.classList.add("nonuser-class");
+    }
+    else {
+        return;
     }
     document.getElementById("messagesList").appendChild(li);
     document.getElementById("messageInput").value = "";
@@ -35,14 +31,11 @@ connection.start().then(function () {
 }).catch(function (err) {
     return console.error(err.toString());
 });
-conn_arr = conn_arr;
 
-ppp = ppp;
 document.getElementById("sendButton").addEventListener("click", function (event) {
-    var message = document.getElementById("messageInput").value;
-    console.log(user.userID, message);
-    var test = [user.userID];
-    connection.invoke("SendMessage", test, message).catch(function (err) {
+    let message = document.getElementById("messageInput").value;
+    let users = [session.currenuserid, session.friendsid,session.id];
+    connection.invoke("SendMessage", users, message).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
@@ -55,7 +48,7 @@ function updateScroll() {
 
 function newChat(friend) {
     document.getElementById("messagesList").innerHTML = '';
-    for (var i = 0; i < chatLog.length; i++) {
+    for (let i = 0; i < chatLog.length; i++) {
         if (user.userID == chatLog[i].userID && friend == chatLog[i].friendID) {
             var conn = chatLog[i].connID;
         }

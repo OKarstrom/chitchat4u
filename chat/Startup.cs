@@ -37,7 +37,7 @@ namespace chat
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
 
-            services.AddDbContext<AppDbContext>(options =>
+            services.AddDbContextPool<AppDbContext>(options =>
                 options.UseMySql(
                     Configuration.GetConnectionString("DefaultConnection")));
 

@@ -17,23 +17,24 @@ namespace chat.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly IDataBaseRepository dataBaseRepository;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IDataBaseRepository dataBaseRepository)
         {
             _logger = logger;
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.dataBaseRepository = dataBaseRepository;
         }
 
 
         [HttpGet]
         public IActionResult Index()
         {
+            
             _logger.LogInformation("chat.Controllers index called (Get)");
             return View();
         }
-
-
 
         public IActionResult Privacy()
         {

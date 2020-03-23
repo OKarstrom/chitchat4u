@@ -104,20 +104,44 @@ namespace chat.Models
             return appDbContext.Users.AsEnumerable<ApplicationUser>().ToList();
         }
 
-        //List<ConnectionVM> IDataBaseRepository.GetAllConnections(string id)
-        //{
-        //    var u = appDbContext.UserConnections.Where(c => c.ApplicationUserID == id).Select(s => s.Connection).Select(s => s.Users.Where(s => s.ApplicationUserID != id));
-        //    foreach(ApplicationUserConnection a in u)
-        //    {
-        //        //a.Connection.Users
-        //        //a.AppUser.UserName;//Name
-        //        //a.ApplicationUserID;//Send address
-        //        //a.ConnectionID;//ConnectionID
-        //    }
-        //}
+        /// <summary>
+        /// Get messaget for connetion id
+        /// </summary>
+        /// <param name="chatId"></param>
+        /// <returns></returns>
+        public List<MessageVM> GetMessages(int chatId)
+        {
+            List<MessageVM> retVal = new List<MessageVM>(); 
+            try
+            {
+                retVal= (from mess in appDbContext.Message
+                     where mess.Connection.Id.Equals(chatId)
+                     select new MessageVM()
+                     {
+                         UserId = mess.ApplicationUser.Id,
+                         UserName = mess.ApplicationUser.DisplayName,
+                         Content = mess.Content
+                     }).ToList();
+            }
+            catch { }
+            return retVal;
+                            
+        }
+
+        public async Task SaveMessage(string Content, string senderID, int connectionID)
+        {
+            Message msg = new Message();
+            msg.Content = Content;
+
+            msg.ApplicationUser = await appDbContext.Users.FindAsync(senderID);
+            msg.Connection = await appDbContext.Connection.FindAsync(connectionID);
+            msg.ApplicationUser.Id = senderID;
+            msg.Connection.Id = connectionID;
+            appDbContext.Message.Add(msg);
+            
+            int ret = await appDbContext.SaveChangesAsync();
+            
+        }
     }
 
-    public class UserManager
-    {
-    }
 }

@@ -9,8 +9,8 @@ using chat.Models;
 namespace chat.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200318160730_ManyToMany")]
-    partial class ManyToMany
+    [Migration("20200323033947_Message V4")]
+    partial class MessageV4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -159,6 +159,9 @@ namespace chat.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("Email")
                         .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
                         .HasMaxLength(256);
@@ -223,7 +226,7 @@ namespace chat.Migrations
 
                     b.HasIndex("ApplicationUserID");
 
-                    b.ToTable("ApplicationUserConnection");
+                    b.ToTable("UserConnections");
                 });
 
             modelBuilder.Entity("chat.Models.Connection", b =>
@@ -336,8 +339,8 @@ namespace chat.Migrations
                         .WithMany()
                         .HasForeignKey("ConnectionId");
 
-                    b.HasOne("chat.Models.ApplicationUser", "User")
-                        .WithMany()
+                    b.HasOne("chat.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Messages")
                         .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618

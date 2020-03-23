@@ -2,7 +2,7 @@
 
 namespace chat.Migrations
 {
-    public partial class Testf : Migration
+    public partial class MessageV4 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

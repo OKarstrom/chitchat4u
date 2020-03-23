@@ -15,13 +15,13 @@ namespace chat.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        private readonly ILogger<HomeController> logger;
+        private readonly ILogger<AccountController> logger;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IDataBaseRepository dataBaseRepository;
 
         public AccountController(
-            ILogger<HomeController> logger, 
+            ILogger<AccountController> logger, 
             UserManager<ApplicationUser> userManager, 
             SignInManager<ApplicationUser> signInManager, 
             IDataBaseRepository dataBaseRepository)
@@ -34,7 +34,6 @@ namespace chat.Controllers
 
         public IActionResult Register()
         {
-            List<ApplicationUser> u = dataBaseRepository.GetAllUsers();
             return View();
         }
 
@@ -149,7 +148,7 @@ namespace chat.Controllers
                     return RedirectToAction("index", "home");
                 ModelState.AddModelError("", "Login failed");
             }
-            return View();
+            return View(login);
         }
 
         [HttpPost]

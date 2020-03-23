@@ -14,6 +14,10 @@ namespace chat.Models
         //List<string> GetConnectionDisplaynames
 
         Connection AddConnection(List<string> id);
+
+        List<MessageVM> GetMessages(int chatId);
+
+        Task SaveMessage(string Content, string senderID, int connectionID);
         
     }
 }

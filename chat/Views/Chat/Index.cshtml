@@ -17,8 +17,20 @@
             <span style="text-align: center; margin-top: 20px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
                 <span style="font-size: large; ">Friends</span>
             </span>
-            <ul class="friend-list" id="friendList">
-            </ul>
+            
+            @{
+                foreach (ConnectionVM cvm in Model.Connections)
+                {
+                    foreach (UserDetails ud in cvm.UserList)
+                    {
+                        <div class="chat-session" @if (cvm.Id == Model.SelectedConnection) { <text> style="background-color:azure;" </text> }>
+                            <div>
+                                <a title="@ud.Email" href="/chat/" + @cvm.Id id="@ud.Id" class="profile-name">@ud.DisplayName</a>
+                            </div>
+                        </div>
+                    }
+                }
+            }
         </div>
         <div id="chatbox">
             <div class="row">
@@ -28,7 +40,25 @@
             </div>
             <div class="row">
                 <div class="col-6">
-                    <ul id="messagesList"></ul>
+                    <ul id="messagesList">
+                        @{
+                            foreach (MessageVM m in Model.Messages)
+                            {
+                                if (m.UserId.Equals(Model.CurrentUserId))
+                                {
+                                    <text>
+                                        <li class="user-class">@m.Content</li>
+                                    </text>
+                                }
+                                else
+                                {
+                                    <text>
+                                        <li class="nonuser-class">@m.Content</li>
+                                    </text>
+                                }
+                            }
+                            }
+                    </ul>
                 </div>
             </div>
         </div>
@@ -63,28 +93,14 @@
 </html>
 <script>
     //Global connection object
-    var conn_arr= [];
-    @foreach (ConnectionVM cvm in Model.Connections)
-    {
-        <text>
-        var conn = new Object();
-        conn.coonectionId = "@cvm.Id";
-        var users = []
-            @foreach (UserDetails ud in cvm.UserList)
-            {
-                <text>
-                var user = new Object();
-                user.id = "@ud.Id";
-                user.email = "@ud.Email";
-                user.displayname = "@ud.DisplayName";
-                users.push(user);
-                </text>
-            }
-        conn.users = users;
-        conn_arr.push(conn);
-        </text>
-    }
-    var ppp = 3;
+    var session = new Object();
+    session.currenuserid = '@Model.CurrentUserId';
+    session.friendsid = '@Model.CurrentFriendId';
+    session.id = '@Model.SelectedConnection';
+    $(document).ready(function () {
+        
+        updateScroll();
+    });
 </script>
 <script type="text/javascript" src="~/js/settings.js"></script>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>

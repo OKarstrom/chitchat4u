@@ -9,8 +9,8 @@ using chat.Models;
 namespace chat.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200319103611_Virtualremoved")]
-    partial class Virtualremoved
+    [Migration("20200323025733_MessegeV2")]
+    partial class MessegeV2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -159,6 +159,9 @@ namespace chat.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("Email")
                         .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
                         .HasMaxLength(256);
@@ -223,7 +226,7 @@ namespace chat.Migrations
 
                     b.HasIndex("ApplicationUserID");
 
-                    b.ToTable("ApplicationUserConnection");
+                    b.ToTable("UserConnections");
                 });
 
             modelBuilder.Entity("chat.Models.Connection", b =>
@@ -252,14 +255,14 @@ namespace chat.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("aspnetusersId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ConnectionId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("aspnetusersId");
 
                     b.ToTable("Message");
                 });
@@ -336,9 +339,9 @@ namespace chat.Migrations
                         .WithMany()
                         .HasForeignKey("ConnectionId");
 
-                    b.HasOne("chat.Models.ApplicationUser", "User")
+                    b.HasOne("chat.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("aspnetusersId");
                 });
 #pragma warning restore 612, 618
         }

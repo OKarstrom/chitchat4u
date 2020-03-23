@@ -21,7 +21,8 @@ namespace chat.Models
         {
             modelBuilder.Entity<ApplicationUserConnection>()
                .HasKey(a => new { a.ConnectionID, a.ApplicationUserID });
-            
+           
+
             base.OnModelCreating(modelBuilder);
         }
 

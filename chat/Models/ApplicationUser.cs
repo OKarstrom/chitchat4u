@@ -11,8 +11,10 @@ namespace chat.Models
         public ApplicationUser()
         {
             this.Connections = new List<ApplicationUserConnection>();
+            this.Messages = new List<Message>();
         }
         public virtual List<ApplicationUserConnection> Connections { get; set; }
+        public virtual List<Message> Messages { get; set; }
         [PersonalData]
         public string DisplayName { get; set; }
         

@@ -334,11 +334,11 @@ namespace chat.Migrations
             modelBuilder.Entity("chat.Models.Message", b =>
                 {
                     b.HasOne("chat.Models.Connection", "Connection")
-                        .WithMany()
+                        .WithMany("Messages")
                         .HasForeignKey("ConnectionId");
 
-                    b.HasOne("chat.Models.ApplicationUser", "User")
-                        .WithMany()
+                    b.HasOne("chat.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Messages")
                         .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
