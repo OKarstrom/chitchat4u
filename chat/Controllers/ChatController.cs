@@ -35,6 +35,26 @@ namespace chat.Controllers
             return View(chatVM);
         }
 
+
+        public ActionResult AddFriend()
+        {
+            AddFriendVM addFriendVM = new AddFriendVM();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            addFriendVM.UserList = dataBaseRepository.GetAddableFriends(userId);
+            return View(addFriendVM);
+        }
+
+        //[HttpPost]
+        //public ActionResult AddFriend()
+        //{
+        //    AddFriendVM addFriendVM = new AddFriendVM();
+        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        //    addFriendVM.UserList = dataBaseRepository.GetAddableFriends(userId);
+        //    return View(addFriendVM);
+        //}
+
         public ActionResult Settings()
         {
             return View();

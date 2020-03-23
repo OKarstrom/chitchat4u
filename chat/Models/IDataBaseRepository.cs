@@ -17,7 +17,11 @@ namespace chat.Models
 
         List<MessageVM> GetMessages(int chatId);
 
+        int ChangeDisplayName(ApplicationUser user);
+
         Task SaveMessage(string Content, string senderID, int connectionID);
+
+        List<ApplicationUser> GetAddableFriends(string userId);
         
     }
 }

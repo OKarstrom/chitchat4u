@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace chat.Models
 {
-    public class ChangeUsername
+    public class ChangeDisplayNameVM
     {
 
         [Required]
         [DataType(DataType.Text)]
-        public string Username { get; set; }
+        [MinLength(4)]
+        public string DisplayName { get; set; }
     }
 }

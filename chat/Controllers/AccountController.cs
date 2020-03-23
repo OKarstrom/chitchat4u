@@ -43,11 +43,12 @@ namespace chat.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser {UserName = register.Username, Email = register.Email};
+                var user = new ApplicationUser {UserName = register.Email, Email = register.Email, DisplayName = register.DisplayName};
                 var result = await userManager.CreateAsync(user, register.Password);
 
                 if (result.Succeeded)
                 {
+
                     //Goto chat
                     await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("index", "chat");
@@ -68,12 +69,7 @@ namespace chat.Controllers
             logger.LogInformation("AccountController Changepassword called (Get)");
             return View();
         }
-
-        public IActionResult ChangeUsername()
-        {
-            logger.LogInformation("AccountController Changeusername called (Get)");
-            return View();
-        }
+        
 
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePassword changepassword)
@@ -100,6 +96,37 @@ namespace chat.Controllers
             return View(changepassword);
         }
 
+        public IActionResult ChangeDisplayName()
+        {
+
+            logger.LogInformation("AccountController Changeusername called (Get)");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeDisplayname(ChangeDisplayNameVM changeDisplayName)
+        {
+            logger.LogInformation("AccountController ChangePassword called (Post)");
+
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.GetUserAsync(this.User);
+                user.DisplayName = changeDisplayName.DisplayName;
+                var result = dataBaseRepository.ChangeDisplayName(user);
+
+                if (result > 0)
+                {
+                    return RedirectToAction("settings", "chat");
+
+                }
+                else
+                {
+                    //Show in register view
+                    ModelState.AddModelError("", "Name is taken!");
+                }
+            }
+            return View(changeDisplayName);
+        }
 
         [HttpGet]
         public IActionResult Login()

@@ -35,6 +35,48 @@ namespace chat.Models
             return c;
         }
 
+        public int ChangeDisplayName(ApplicationUser user)
+        {
+            appDbContext.Users.Update(user);
+            return appDbContext.SaveChanges();
+        }
+
+        public List<ApplicationUser> GetAddableFriends(string userId)
+        {
+            List<ConnectionVM> conlist = GetAllConnections(userId);
+            List<ApplicationUser> Users = GetAllUsers();
+
+            Dictionary<string, UserDetails> dictUsers = new Dictionary<string, UserDetails>();
+            
+            foreach (ConnectionVM cvm in conlist)
+            {
+                foreach (UserDetails ud in cvm.UserList)
+                {
+                    if (!ud.Id.Equals(userId))
+                        dictUsers.Add(ud.Id, ud);
+                }
+            }
+
+            List<ApplicationUser> remove = new List<ApplicationUser>();
+
+            foreach (ApplicationUser au in Users)
+            {
+                if (dictUsers.ContainsKey(au.Id))
+                {
+                    remove.Add(au);
+                }
+            }
+
+            foreach (ApplicationUser u in remove)
+            {
+                Users.Remove(u);
+            }
+            
+
+
+            return Users;
+        }
+
         public List<Connection> GetAllConnections()
         {
             return appDbContext.Connection.AsEnumerable<Connection>().ToList();
@@ -101,7 +143,7 @@ namespace chat.Models
 
         public List<ApplicationUser> GetAllUsers()
         {
-            return appDbContext.Users.AsEnumerable<ApplicationUser>().ToList();
+            return appDbContext.Users.ToList();
         }
 
         /// <summary>

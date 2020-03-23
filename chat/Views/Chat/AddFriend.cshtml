@@ -1,0 +1,21 @@
+﻿@model AddFriendVM
+@{
+    ViewData["Title"] = "AddFriend";
+    Layout = "_Layout";
+}
+
+<h1>AddFriend</h1>
+
+<form asp-controller="Home" asp-action="Create">
+
+    <label>Select a friend</label>
+    <select asp-for="SelectedUser"
+            asp-items="@(new SelectList(Model.UserList,"Id","Email"))">
+        <option>Please select one</option>
+    </select>
+
+    <input type="submit" />
+
+</form>
+
+

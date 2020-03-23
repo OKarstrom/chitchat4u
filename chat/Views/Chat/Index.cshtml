@@ -12,12 +12,12 @@
     <div id="screen">
         <div id="left-div">
 
-            <button class="top-btn" onclick="openAddFriend()">+</button>
+            <button class="top-btn" onclick="location.href='@Url.Action("addfriend", "chat")'">+</button>
 
             <span style="text-align: center; margin-top: 20px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
                 <span style="font-size: large; ">Friends</span>
             </span>
-            
+
             @{
                 foreach (ConnectionVM cvm in Model.Connections)
                 {

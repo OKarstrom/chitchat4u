@@ -7,6 +7,10 @@ namespace chat.Models
 {
     public class ConnectionVM
     {
+        public ConnectionVM()
+        {
+            this.UserList = new List<UserDetails>();
+        }
         public int Id { get; set; }
         public List<UserDetails> UserList { get; set; }
 

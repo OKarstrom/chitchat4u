@@ -15,7 +15,7 @@ namespace chat.Models
 
         [Required]
         [DataType(DataType.Text)]
-        public string Username { get; set; }
+        public string DisplayName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
