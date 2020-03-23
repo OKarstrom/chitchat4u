@@ -45,28 +45,32 @@ namespace chat.Controllers
             return View(addFriendVM);
         }
 
-        //[HttpPost]
-        //public ActionResult AddFriend()
-        //{
-        //    AddFriendVM addFriendVM = new AddFriendVM();
-        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        [HttpPost]
+        public ActionResult AddFriend(AddFriendVM addFriendVM)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        //    addFriendVM.UserList = dataBaseRepository.GetAddableFriends(userId);
-        //    return View(addFriendVM);
-        //}
+            List<string> listUsers = new List<string>();
+            listUsers.Add(userId);
+            listUsers.Add(addFriendVM.SelectedUser.Id);
+            dataBaseRepository.AddConnection(listUsers);
+            addFriendVM.UserList = dataBaseRepository.GetAddableFriends(userId);
+
+            return View(addFriendVM);
+        }
 
         public ActionResult Settings()
         {
             return View();
         }
 
-        [HttpPost("chat/{connectionId}")]
+        [HttpGet("chat/{connectionId}")]
         public ActionResult Index([FromRoute] int connectionId)
         {
 
             //logger.LogInformation("Cinnection id" + connectionId);
             ChatVM chatVM = GetChatVM(connectionId);
-            return View();
+            return View(chatVM);
 
         }
 

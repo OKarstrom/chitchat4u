@@ -25,7 +25,7 @@
                     {
                         <div class="chat-session" @if (cvm.Id == Model.SelectedConnection) { <text> style="background-color:azure;" </text> }>
                             <div>
-                                <a title="@ud.Email" href="/chat/" + @cvm.Id id="@ud.Id" class="profile-name">@ud.DisplayName</a>
+                                <a title="@ud.Email" href="/chat/@cvm.Id" id="@ud.Id" class="profile-name">@ud.DisplayName</a>
                             </div>
                         </div>
                     }
