@@ -11,8 +11,6 @@ namespace chat.Models
 
         List<ApplicationUser> GetAllUsers();
 
-        //List<string> GetConnectionDisplaynames
-
         Connection AddConnection(List<string> id);
 
         List<MessageVM> GetMessages(int chatId);
